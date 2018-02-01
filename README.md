@@ -10,7 +10,6 @@ Developed a Prototype Bus Reservation System with MySQL as database Python (Djan
   -- Book tickets, Upto 4 passengers per ticket
   -- Cancel/ Modify tickets
   -- Recover forgotten password
-  
 
 2. Admin/ Station master Module:
   -- Manage Registered Customers
