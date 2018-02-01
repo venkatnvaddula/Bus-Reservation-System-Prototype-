@@ -1,0 +1,46 @@
+
+{% extends 'base.html' %}
+
+{% block title %}BRS - Home Page{% endblock title %}
+{% block content %}
+{% load staticfiles %}<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="{% static 'css/homebrs.css'%}" type="text/css">
+<title>Bus Reservation System</title>
+</head>
+<style>
+.menuitem{
+text-align:center;
+color:#ffffff;
+font-size:20px;
+}
+</style>
+<body>
+	<div id="container">
+		
+		<nav id="menu">
+			<ul>
+				<li class="menuitem"><strong style="color:black">About Us</strong></li>
+			</ul>
+	    </nav>
+		 
+
+<section style="width:100%">
+<p> 
+
+rBus provides bus travellers, the most uncomplicated and hassle-free booking experience ever.
+Choose your destination, select bus based on user ratings, view the seat layout, choose convenient seats, and book your ticket in just a few clicks!
+The rBus experience does not end with the booking.
+In a series of industry leading features, rBus offers navigation to bus boarding points, real-time tracking of buses and information on rest stops.
+</br>
+</br>
+rBus also partners with leading bus operators to provide exclusive ‘Red Deals” to customers booking on rBus.
+</br>
+</br>
+A dedicated 24*7 customer-care team is available to cater to all the passengers needs while they are on-the- go.</p>
+   </section>
+</div><!--container ending-->
+</body>
+</html>
+{% endblock content %}

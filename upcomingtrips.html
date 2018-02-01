@@ -1,0 +1,90 @@
+
+{% extends 'base-loggedin.html' %}
+
+{% block title %}BRS - Upcoming Trips{% endblock title %}
+{% block content %}
+{% load staticfiles %}<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="{% static 'css/homebrs.css'%}" type="text/css">
+<title>Bus Reservation System</title>
+</head>
+<body>
+	<div id="container">
+		
+		<nav id="menu">
+			<ul>
+				<li class="menuitem navbar-brand value-brand"> <strong>Upcoming Trips </strong></li>
+			</ul>
+	    </nav>
+		 
+		 <aside>
+			<nav id="leftmenu">
+			<h3>Applications</h3>
+				<ul>
+					<li><a href="{% url 'bookticket' %}">Book a ticket</a></li>
+					<li><a href="{% url 'bookinghistory' %}">Booking History</a></li>
+					<li><a href="{% url 'upcomingtrips' %}">Upcoming Trips</a></li>
+					<li><a href="{% url 'bus_schedule' %}">Bus Schedule</a></li>
+				</ul>
+			</nav>
+		</aside>
+    
+<section>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+.menuitem{
+text-align:center;
+color:#ffffff;
+font-size:20px;
+}
+</style>
+<table>
+  <tr>
+    <th>Ticket ID</th>
+	<th>Date</th>
+    <th>Bus ID</th>
+	<th>Bus Name</th>
+    <th>Source</th>
+	<th>Destination</th>
+	<th>Departure Time</th>
+	<th>Arrival Time</th>
+	<th>Passenger Count</th>
+	<th>Action </th>
+  </tr>
+	{%for tup in data%}
+    <tr>
+		<form  action = "{%url 'cancellation'%}" method = "GET">
+			{% csrf_token %}
+			<input type="hidden" name="ticket_id" value="{{tup.0}}"></input>
+			<input type="hidden" name="traveldate" value="{{tup.1}}"></input>
+			<input type="hidden" name="bus_id" value="{{tup.2}}"></input>
+			<input type="hidden" name="bus_name" value="{{tup.3}}"></input>
+			<input  type="hidden" name="source" value="{{tup.4}}"></input>
+			<input  type="hidden" name="destination" value="{{tup.5}}"></input>
+			<input type="hidden" name="departure_time" value="{{tup.6}}"></input>
+			<input  type="hidden" name="arrival_time" value="{{tup.7}}"></input>
+			<input  type="hidden" name="passenger_count" value="{{tup.8}}"></input>
+    {%for data in tup%}
+        <td>{{data}}</td>
+        {%endfor%}
+		<td><input type="submit" value = "Cancel" class='btn btn-primary navbar-btn'></input></td>
+		</form>
+    </tr>
+    {%endfor%}
+  </table>
+</section>
+</div><!--container ending-->
+</body>
+</html>
+{% endblock content %}

@@ -1,0 +1,76 @@
+
+{% extends 'base-loggedin.html' %}
+
+{% block title %}BRS - Booking history{% endblock title %}
+{% block content %}
+{% load staticfiles %}<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="{% static 'css/homebrs.css'%}" type="text/css">
+<title>Bus Reservation System</title>
+</head>
+<style>
+.menuitem{
+text-align:center;
+color:#ffffff;
+font-size:20px;
+}
+</style>
+<body>
+	<div id="container">
+		
+		<nav id="menu">
+			<ul>
+				<li class="menuitem navbar-brand value-brand"> <strong>Booking History </strong></li>
+			</ul>
+	    </nav>
+		 
+		 <aside>
+			<nav id="leftmenu">
+			<h3>Applications</h3>
+				<ul>
+					<li><a href="{% url 'bookticket' %}">Book a ticket</a></li>
+					<li><a href="{% url 'bookinghistory' %}">Booking History</a></li>
+					<li><a href="{% url 'upcomingtrips' %}">Upcoming Trips</a></li>
+					<li><a href="{% url 'bus_schedule' %}">Bus Schedule</a></li>
+				</ul>
+			</nav>
+		</aside>
+    
+<section>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+</style>
+<table>
+  <tr>
+    <th>Ticket ID</th>
+    <th>Travel Date</th>
+    <th>Source</th>
+	<th>Destination</th>
+	<th>Bus ID</th>
+	<th>Bus Name</th>
+	<th>Passenger Count</th>
+  </tr>
+	{%for tup in data%}
+	<tr>
+		{%for element in tup%}
+		<td>{{element}}</td>
+		{%endfor%}
+	</tr>
+	{%endfor%}
+  </table>
+</section>
+</div><!--container ending-->
+</body>
+</html>
+{% endblock content %}

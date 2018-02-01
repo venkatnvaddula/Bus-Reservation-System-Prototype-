@@ -1,0 +1,47 @@
+
+{% extends 'base-adminloggedin.html' %}
+
+{% block title %}ADMIN BRS - Add Bus{% endblock title %}
+{% block content %}
+{% load staticfiles %}<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="{% static 'css/homebrs.css'%}" type="text/css">
+<title>Bus Reservation System</title>
+</head>
+<body>
+	<div id="container">
+		
+		<nav id="menu">
+			<ul>
+				<li class="menuitem navbar-brand value-brand">Admin Home</li>
+			</ul>
+	    </nav>
+		 
+		 <aside>
+			<nav id="leftmenu">
+			<h3>Applications</h3>
+				<ul>
+					<li><a href="{% url 'adminbusadd' %}">Add Bus</a></li>
+					<li><a href="{% url 'adminbusdelete' %}">Delete Bus</a></li>
+					<li><a href="{% url 'adminuserdelete' %}">Delete User</a></li>
+					<li><a href="{% url 'adminsql' %}">SQL Query</a></li>
+				</ul>
+			</nav>
+		</aside>
+    
+<section>
+	<iframe href="https://www.w3schools.com" >
+  <p>Your browser does not support iframes.</p>
+</iframe>
+
+		<h2>Bus Reservation System! </h2>
+<h3>Who Are We?</h3>
+<p>We are thop</p>
+<h3>What Skills Do Our Developers Have?</h3>
+<p>Some more sodhi here </p>
+   </section>
+</div><!--container ending-->
+</body>
+</html>
+{% endblock content %}

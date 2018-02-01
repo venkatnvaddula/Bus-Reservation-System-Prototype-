@@ -1,0 +1,33 @@
+<header>
+
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+
+        <a href="{%url 'adminhomebrs'%}" class="navbar-brand value-brand">Bus Reservation System</a>
+	
+      </div>
+
+      <div class="collapse navbar-collapse" id="header-menu">
+
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="">
+                <span data-toggle="tooltip" data-placement="bottom" data-container="body">{{Name}}</span>
+              </a>
+            </li>
+            <li>
+              <span class="navbar-text username-divider"></span>
+            </li>
+            <li>
+              <a href="{% url 'signout' %}">
+                <span data-toggle="tooltip" data-placement="bottom" data-container="body" title="Sign out">
+                  <span class="glyphicon glyphicon-log-out"></span>
+                </span>
+              </a>
+            </li>
+          </ul>
+      </div>
+    </div>
+  </nav>
+</header>

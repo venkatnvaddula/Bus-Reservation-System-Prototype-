@@ -1,0 +1,227 @@
+
+{% extends 'base-loggedin.html' %}
+
+{% block title %}BRS - Book a ticket{% endblock title %}
+{% block content %}
+{% load staticfiles %}<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="{% static 'css/homebrs.css'%}" type="text/css">
+<title>Bus Reservation System</title>
+<link rel="stylesheet" href="{% static 'css/pikaday.css' %}" type="text/css">
+<script src="{% static 'js/moment.js' %}"></script>
+<script src="{% static 'js/pikaday.js' %}"></script>
+<script>
+var timepicker = new Pikaday({
+    field: document.getElementById('datetimepicker'),
+    firstDay: 1,
+    minDate: new Date(2016, 0, 1),
+    maxDate: new Date(2100, 12, 31),
+    yearRange: [2016,2100],
+    showTime: true,
+    autoClose: false,
+    use24hour: false,
+    format: 'MMM Do YYYY, h:mm a'
+});
+</script>
+	  <script type="text/javascript">
+
+                    $(document).ready(function() {
+                        $('#selector').gentleSelect(); // apply gentleSelect with default options
+                    });
+
+
+    </script>
+	<script>
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+		 if(dd<10){
+				dd='0'+dd
+			}
+			if(mm<10){
+				mm='0'+mm
+			}
+
+		 var t = yyyy+'-'+mm+'-'+dd;
+		console.log(t);
+		document.getElementById("datefield").setAttribute("min", t);
+	</script>
+
+</head>
+<style>
+.menuitem{
+text-align:center;
+color:#ffffff;
+font-size:20px;
+}
+</style>
+<body>
+	<div id="container">
+		
+		<nav id="menu">
+			<ul>
+				<li class="menuitem navbar-brand value-brand"><strong>Book a Ticket</strong></li>
+			</ul>
+	    </nav>
+		 
+		 <aside>
+			<nav id="leftmenu">
+			<h3>Applications</h3>
+				<ul>
+					<li><a href="{% url 'bookticket' %}">Book a ticket</a></li>
+					<li><a href="{% url 'bookinghistory' %}">Booking History</a></li>
+					<li><a href="{% url 'upcomingtrips' %}">Upcoming Trips</a></li>
+					<li><a href="{% url 'bus_schedule' %}">Bus Schedule</a></li>
+				</ul>
+			</nav>
+		</aside>
+
+<section>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+#t1 {
+    -moz-tab-size: 4; /* Code for Firefox */
+    -o-tab-size: 4; /* Code for Opera 10.6-12.1 */
+    tab-size: 4;
+}
+
+#t2 {
+    -moz-tab-size: 16; /* Code for Firefox */
+    -o-tab-size: 16; /* Code for Opera 10.6-12.1 */
+    tab-size: 16;
+}
+</style>
+<form method="POST" name="dataform" action = "{%url 'bookticket'%}" class="ey" id="formid">
+	{% csrf_token %}
+	{%if msg%}
+	<h3>{{msg}}</h3>
+	{%endif%}
+<label >Source&#x2A;:</label>
+<select name="Source" required>
+    <option value = "">----</option>
+	{%for tup in City_name%}
+	{%for city in tup%}
+	  {%if city == source_selected %}
+	  <option value="{{city}}"  selected = "selected">{{city}}</option>
+	  {%else%}
+	  <option value="{{city}}">{{city}}</option>
+	  {%endif%}
+	{%endfor%}
+	{%endfor%}
+</select>
+	<p></p>
+<label >Destination&#x2A;:</label>
+<select name = "Destination" required>
+	<option value = "" >----</option>
+	{%for tup in City_name%}
+	{%for city in tup%}
+	{%if city == destination_selected %}
+	<option value="{{city}}" selected = "selected">{{city}}</option>
+	{%else%}
+	<option value="{{city}}">{{city}}</option>
+	{%endif%}
+	{%endfor%}
+	{%endfor%}
+</select>
+</br>
+	<p></p>
+<label>Bus Number:</label>
+<select name = "Bus_no">
+<optgroup label="Bus number">
+	<option value="----">----</option>
+    {%for tup in Bus_id%}
+	{%for bus in tup%}
+	{%if bus == bus_no %}
+	<option value={{bus}} selected="selected">{{bus}}</option>
+	{%else%}
+	<option value={{bus}}>{{bus}}</option>
+	{%endif%}
+	{%endfor%}
+	{%endfor%}
+</optgroup>
+</select> 
+</br>
+	<p></p>
+<label>Travel Date&#x2A;:</label>
+		{%if  date_travel == "------"%}
+		<input type="date" name = "traveldate" id="datefield" min='2017-11-01' required>
+		{%else%}
+		<input type="date" name = "traveldate" value={{date_travel}} required>
+		{%endif%}
+</br>
+</br>
+<label>Start time:</label>
+	{%if Start_time == "------"%}
+	<input type="time" name="start_time">
+	{%else%}
+	<input type="time" name="start_time" value="{{Start_time}}">
+	{%endif%}
+</br>
+</br>
+<label>End time:</label>
+	{%if End_time == "------"%}
+	<input type="time" name="end_time">
+	{%else%}
+	<input type="time" name="end_time" value="{{End_time}}">
+	{%endif%}
+</br>
+</br>
+<input type = "submit" value = "Search" class='btn btn-primary navbar-btn'>
+</br>
+</form>
+<table>
+</br>
+  <tr>
+    <th>Bus ID</th>
+    <th>Bus Name</th>
+    <th>Source</th>
+	<th>Destination</th>
+	<th>Departure Time</th>
+	<th>Arrival Time</th>
+	<th>Availability</th>
+	  <th>Book</th>
+  </tr>
+	{%if not Available_buses%}
+	<h3>{{rslt}}</h3>
+	{%endif%}
+	{%for tup in Available_buses%}
+    <tr>
+		<form  action = "{%url 'passengerinfo'%}">
+			{% csrf_token %}
+			<input type="hidden" name="bus_id" value="{{tup.0}}"></input>
+			<input type="hidden" name="bus_name" value="{{tup.1}}"></input>
+			<input type="hidden" name="source" value="{{tup.2}}"></input>
+			<input type="hidden" name="destination" value="{{tup.3}}"></input>
+			<input  type="hidden" name="dep_time" value="{{tup.4}}"></input>
+			<input  type="hidden" name="arr_time" value="{{tup.5}}"></input>
+			<input type="hidden" name="availability" value="{{tup.6}}"></input>
+			<input  type="hidden" name="traveldate" value="{{date_travel}}"></input>
+    {%for data in tup%}
+        <td>{{data}}</td>
+        {%endfor%}
+		{%if 0 not in tup%}
+		<td><input type="submit" value = "Book" class='btn btn-primary navbar-btn'></input></td>
+		{%endif%}
+		</form>
+    </tr>
+    {%endfor%}
+</table>
+	
+</section>
+</div><!--container ending-->
+</body>
+</html>
+{% endblock content %}

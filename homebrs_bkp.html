@@ -1,0 +1,47 @@
+{% extends 'base-loggedin.html' %}
+
+{% block title %}BRS - Home Page{% endblock title %}
+{% block content %}
+{% load staticfiles %}<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="{% static 'css/homebrs.css'%}" type="text/css">
+<title>Bus Reservation System</title>
+</head>
+<style>
+.menuitem{
+text-align:center;
+color:#ffffff;
+font-size:20px;
+}
+</style>
+<body>
+	<div id="container">
+		<nav id="menu">
+			<ul>
+				<li class="menuitem"><a href="about.html">About</a></li>
+			</ul>
+	    </nav>
+		 <aside>
+			<nav id="leftmenu">
+			<h3>Applications</h3>
+				<ul>
+					<li><a href="{% url 'bookticket' %}">Book a ticket</a></li>
+					<li><a href="{% url 'bookinghistory' %}">Booking History</a></li>
+					<li><a href="{% url 'upcomingtrips' %}">Upcoming Trips</a></li>
+					<li><a href="{% url 'bus_schedule' %}">Bus Schedule</a></li>
+				</ul>
+			</nav>
+		</aside>
+    
+		<section>
+			<h2>Bus Reservation System! </h2>
+			<h3>Who Are We?</h3>
+			<p>We are thop</p>
+			<h3>What Skills Do Our Developers Have?</h3>
+			<p>Some more sodhi here </p>
+		</section>
+	</div><!--container ending-->
+</body>
+</html>
+{% endblock content %}

@@ -1,0 +1,69 @@
+{% extends 'base-adminloggedin.html' %}
+
+{% block title %}ADMIN BRS - Delete Bus{% endblock title %}
+{% block content %}
+{% load staticfiles %}<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="{% static 'css/homebrs.css'%}" type="text/css">
+<title>Bus Reservation System</title>
+</head>
+<style>
+.menuitem{
+text-align:center;
+color:#ffffff;
+font-size:20px;
+}
+</style>
+<body>
+	<div id="container">
+		
+		<nav id="menu">
+			<ul>
+				<li class="menuitem navbar-brand value-brand"><strong>Delete a Bus</strong></li>
+			</ul>
+	    </nav>
+		 
+		 <aside>
+			<nav id="leftmenu">
+			<h3>Applications</h3>
+				<ul>
+					<li><a href="{% url 'adminbusadd' %}">Add Bus</a></li>
+					<li><a href="{% url 'adminbusdelete' %}">Delete Bus</a></li>
+					<li><a href="{% url 'adminuserdelete' %}">Delete User</a></li>
+					<li><a href="{% url 'adminsql' %}">SQL Query</a></li>
+				</ul>
+			</nav>
+		</aside>
+    
+<section>
+		<form action="{%url 'adminsql'%}" method="post">
+			{% csrf_token %}
+			{%if msg%}
+			<h3>{{msg}}</h3>
+			{%endif%}
+			<label class="control-label">Enter SQL Query:</label> 
+			<input type='text'  class="form-control" name='sqlQuery'>
+			<input type='submit' value='Execute Query' class='btn btn-primary navbar-btn'>
+			{%if data%}
+			<br>
+			<br>
+			<label class="control-label">Result:</label>
+			<table>
+			{%for tup in data%}
+			<tr>
+			{%for dat in tup%}
+			<td>
+			{{dat}}
+			</td>
+			{%endfor%}
+			</tr>
+			{%endfor%}
+			</table>
+			{%endif%}
+		</form>
+</section>
+</div><!--container ending-->
+</body>
+</html>
+{% endblock content %}

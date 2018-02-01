@@ -1,0 +1,52 @@
+{% extends 'base-adminloggedin.html' %}
+
+{% block title %}ADMIN BRS - Delete User{% endblock title %}
+{% block content %}
+{% load staticfiles %}<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="{% static 'css/homebrs.css'%}" type="text/css">
+<title>Bus Reservation System</title>
+</head>
+<style>
+.menuitem{
+text-align:center;
+color:#ffffff;
+font-size:20px;
+}
+</style>
+<body>
+	<div id="container">
+		
+		<nav id="menu">
+			<ul>
+				<li class="menuitem navbar-brand value-brand"><strong>Delete a User</strong></li>
+			</ul>
+	    </nav>
+		 
+		 <aside>
+			<nav id="leftmenu">
+			<h3>Applications</h3>
+				<ul>
+					<li><a href="{% url 'adminbusadd' %}">Add Bus</a></li>
+					<li><a href="{% url 'adminbusdelete' %}">Delete Bus</a></li>
+					<li><a href="{% url 'adminuserdelete' %}">Delete User</a></li>
+				</ul>
+			</nav>
+		</aside>
+    
+<section>
+		<form action="adminuserdelete" method = "POST">
+			{% csrf_token %}
+			{%if msg%}
+			<h3>{{msg}}</h3>
+			{%endif%}
+			<label class="control-label">Customer User Id:</label> 
+			<input type='text'  class="form-control" name='deleteUserId'>
+			<input type='submit' value='Remove User' class='btn btn-primary navbar-btn'>
+		</form>
+</section>
+</div><!--container ending-->
+</body>
+</html>
+{% endblock content %}

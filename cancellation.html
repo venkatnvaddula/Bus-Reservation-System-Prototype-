@@ -1,0 +1,119 @@
+
+{% extends 'base-loggedin.html' %}
+
+{% block title %}BRS - Home Page{% endblock title %}
+{% block content %}
+{% load staticfiles %}<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="{% static 'css/homebrs.css'%}" type="text/css">
+<title>Bus Reservation System</title>
+</head>
+<body>
+	<div id="container">
+
+		<nav id="menu">
+			<ul>
+				<li class="menuitem"> <strong>Cancellation </strong></li>
+			</ul>
+	    </nav>
+
+		 <aside>
+			<nav id="leftmenu">
+			<h3>Applications</h3>
+				<ul>
+					<li><a href="{% url 'bookticket' %}">Book a ticket</a></li>
+					<li><a href="{% url 'bookinghistory' %}">Booking History</a></li>
+					<li><a href="{% url 'upcomingtrips' %}">Upcoming Trips</a></li>
+					<li><a href="{% url 'bus_schedule' %}">Bus Schedule</a></li>
+				</ul>
+			</nav>
+		</aside>
+
+<section>
+<style>
+.menuitem{
+color:#ffffff;
+font-size:20px;
+}
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+ .FirstLabel {
+    margin-right: 10px;
+}
+.passengerInfo {
+ color: red;
+ float:center;
+ }
+ .button-container form,
+.button-container form div {
+    display: inline;
+}
+
+.button-container button {
+    display: inline;
+    vertical-align: middle;
+}
+</style>
+	<div class="button-container">
+<form method = "POST" action="{%url 'cancellation'%}">
+{% csrf_token %}
+			<input type="hidden" name="ticket_id" value="{{ticket_id}}"></input>
+			<input type="hidden" name="traveldate" value="{{traveldate}}"></input>
+			<input type="hidden" name="bus_id" value="{{bus_id}}"></input>
+			<input type="hidden" name="bus_name" value="{{bus_name}}"></input>
+			<input  type="hidden" name="source" value="{{source}}"></input>
+			<input  type="hidden" name="destination" value="{{destination}}"></input>
+			<input type="hidden" name="departure_time" value="{{departure_time}}"></input>
+			<input  type="hidden" name="arrival_time" value="{{arrival_time}}"></input>
+			<input  type="hidden" name="passenger_count" value="{{passenger_count}}"></input>
+
+<p><span class="FirstLabel"><b>From:</b></span><span class="passengerInfo">{{source}}</span></p>
+
+<p><span class="FirstLabel"><b>To:</b></span><span class="passengerInfo">{{destination}}</span></p>
+
+<p><span class="FirstLabel"><b>Bus ID:</b></span><span class="passengerInfo">{{bus_id}}</span></p>
+
+<p><span class="FirstLabel"><b>Travel Date:</b></span><span class="passengerInfo">{{traveldate}}</span></p>
+
+<p><span class="FirstLabel"><b>Departure Time:</b></span><span class="passengerInfo">{{departure_time}}</span></p>
+
+<p><span class="FirstLabel"><b>Arrival Time:</b></span><span class="passengerInfo">{{arrival_time}}</span></p>
+
+<table>
+  <tr>
+    <th></th>
+    <th>Passenger Name</th>
+  </tr>
+	{% for tup in passengers %}
+    <tr>
+		<td><input type="checkbox" name={{tup.1}} id={{tup.1}}> </td>
+		<td>{{tup.0}}</td>
+	</tr>
+	{%endfor%}
+  </table>
+   </br>
+  </br>
+  	<input type = "submit" value = "Cancel ticket" class='btn btn-primary navbar-btn'>
+</form>
+		<form action="{%url 'upcomingtrips'%}" method="GET">
+        {% csrf_token %}
+		<div>
+            <button type="submit" class='btn btn-primary navbar-btn'>Back</button>
+        </div>
+    </form>
+	</div>
+</section>
+</div><!--container ending-->
+</body>
+</html>
+{% endblock content %}

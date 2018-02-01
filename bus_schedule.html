@@ -1,0 +1,102 @@
+
+{% extends 'base-loggedin.html' %}
+
+{% block title %}BRS - Bus schedule{% endblock title %}
+{% block content %}
+{% load staticfiles %}<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="{% static 'css/homebrs.css'%}" type="text/css">
+<title>Bus Reservation System</title>
+</head>
+<style>
+.menuitem{
+text-align:center;
+color:#ffffff;
+font-size:20px;
+}
+</style>
+<body>
+	<div id="container">
+		
+		<nav id="menu">
+			<ul>
+				<li class="menuitem navbar-brand value-brand"> <strong>Bus Schedule</strong></li>
+			</ul>
+	    </nav>
+		 
+		 <aside>
+			<nav id="leftmenu">
+			<h3>Applications</h3>
+				<ul>
+					<li><a href="{% url 'bookticket' %}">Book a ticket</a></li>
+					<li><a href="{% url 'bookinghistory' %}">Booking History</a></li>
+					<li><a href="{% url 'upcomingtrips' %}">Upcoming Trips</a></li>
+					<li><a href="{% url 'bus_schedule' %}">Bus Schedule</a></li>
+				</ul>
+			</nav>
+		</aside>
+    
+<section>
+<div>
+<form action="{url 'bus_schedule'}" method = 'POST'>
+	{% csrf_token %}
+<fieldset>
+<label >Bus ID:</label>
+<select style="font-size:14px;" name="Bus_ID" required>
+	  <option value="">--Bus ID--</option>
+	  {%for tup in buses%}
+	  {%for bus in tup%}
+	  {%if bus_id == bus %}
+    	<option value="{{bus}}" selected = "selected">{{bus}}</option>
+	  {%else%}
+	  	<option value="{{bus}}">{{bus}}</option>
+	  {%endif%}
+	  {%endfor%}
+	  {%endfor%}
+</select>
+</fieldset>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; <input type="submit" value="Search" class="btn btn-primary navbar-btn" /></p>
+</form>
+<br>
+</div>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+</style>
+<table>
+  <tr>
+    <th>City</th>
+    <th>Arrival Time</th>
+	<th>Departure Time</th>
+  </tr>
+
+	{%for tup in schedule%}
+		<tr>
+		{%for data in tup %}
+		{%if data == zero_time%}
+		<td>----</td>
+		{%else%}
+		<td>{{data}}</td>
+		{%endif%}
+		{%endfor%}
+		</tr>
+		{%endfor%}
+  </table>
+</section>
+</div><!--container ending-->
+</body>
+</html>
+{% endblock content %}

@@ -1,0 +1,154 @@
+
+{% extends 'base-adminloggedin.html' %}
+
+{% block title %}Admin BRS - Add Bus {% endblock title %}
+{% block content %}
+{% load staticfiles %}<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="{% static 'css/homebrs.css'%}" type="text/css">
+<title>Bus Reservation System</title>
+</head>
+<style>
+.menuitem{
+text-align:center;
+color:#ffffff;
+font-size:20px;
+}
+</style>
+<body>
+	<div id="container">
+		
+		<nav id="menu">
+			<ul>
+				<li class="menuitem navbar-brand value-brand"><strong>Add a new Bus</strong></li>
+			</ul>
+	    </nav>
+		 
+		 <aside>
+			<nav id="leftmenu">
+			<h3>Applications</h3>
+				<ul>
+					<li><a href="{% url 'adminbusadd' %}">Add Bus</a></li>
+					<li><a href="{% url 'adminbusdelete' %}">Delete Bus</a></li>
+					<li><a href="{% url 'adminuserdelete' %}">Delete User</a></li>
+				</ul>
+			</nav>
+		</aside>
+    
+<section>
+<style> 
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+#t1 {
+    -moz-tab-size: 4; /* Code for Firefox */
+    -o-tab-size: 4; /* Code for Opera 10.6-12.1 */
+    tab-size: 4;
+}
+
+#t2 {
+    -moz-tab-size: 16; /* Code for Firefox */
+    -o-tab-size: 16; /* Code for Opera 10.6-12.1 */
+    tab-size: 16;
+}
+</style>
+<form method = "POST" action="{%url 'adminbusadd'%}">
+	{% csrf_token %}
+	{%if msg%}
+	<h3>{{msg}}</h3>
+	{%endif%}
+<label >Source&#x2A;:</label>
+<select name = "Source" required>
+    <option value="">----</option>
+	{%for tup in City_name%}
+	{%for city in tup%}
+	  {%if source == city%}
+	<option value="{{city}}" selected="selected">{{city}}</option>
+	  {%else%}
+	  <option value="{{city}}">{{city}}</option>
+	  {%endif%}
+	{%endfor%}
+	{%endfor%}
+</select>
+</br>
+<label>Destination&#x2A;:</label>
+<select name = "Destination" required>
+	<option value="" >----</option>
+	{%for tup in City_name%}
+	{%for city in tup%}
+	{%if destination == city%}
+	<option value="{{city}}" selected="selected">{{city}}</option>
+	  {%else%}
+	  <option value="{{city}}">{{city}}</option>
+	  {%endif%}
+	{%endfor%}
+	{%endfor%}
+</select>   
+</br>
+<label>Bus Number:</label>
+<select name = "Bus_id">
+<optgroup label="Bus_id">
+	<option value="----">----</option>
+    {%for tup in Bus_id%}
+	{%for bus in tup%}
+	{%if bus_num == bus%}
+	<option value="{{bus}}" selected = "selected">{{bus}}</option>
+	{%else%}
+	<option value="{{bus}}">{{bus}}</option>
+	{%endif%}
+	{%endfor%}
+	{%endfor%}
+</optgroup>
+</select> 
+</br>
+<input type = "submit" value = "Search" class='btn btn-primary navbar-btn'>
+</br>
+</form>
+	{%if not buses%}
+	{%if not msg%}
+	<h3>{{msg1}}</h3>
+	{%endif%}
+	{%endif%}
+<table>
+</br>
+  <tr>
+    <th>Bus ID</th>
+    <th>Bus Name</th>
+	<th>Departure Time</th>
+	<th>Arrival Time</th>
+	  <th>Action</th>
+  </tr>
+	{%for tup in buses%}
+    <tr>
+		<form  method="GET" action = "{%url 'addbus'%}">
+			{% csrf_token %}
+			<input type="hidden" name="bus_id" value="{{tup.0}}"></input>
+			<td>{{tup.0}}</td>
+    		<td>{{tup.1}}</td>
+			<td>{{tup.2}}</td>
+			<td>{{tup.3}}</td>
+			{%if tup.4 < 5%}
+			<td><input type="submit" value = "ADD" class='btn btn-primary navbar-btn'></input></td>
+			{%else%}
+			<td style="color:red;"><strong>Limit reached</strong></td>
+			{%endif%}
+		</form>
+    </tr>
+	{%endfor%}
+</table>
+	
+</section>
+</div><!--container ending-->
+</body>
+</html>
+{% endblock content %}

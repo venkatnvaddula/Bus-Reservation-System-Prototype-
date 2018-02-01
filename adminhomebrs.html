@@ -1,0 +1,51 @@
+
+{% extends 'base-adminloggedin.html' %}
+
+{% block title %}ADMIN BRS - Home Page{% endblock title %}
+{% block content %}
+{% load staticfiles %}<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="{% static 'css/homebrs.css'%}" type="text/css">
+<title>Bus Reservation System</title>
+</head>
+<style>
+.menuitem
+{
+color:#ffffff;
+font-size:20px;
+}
+</style>
+<body>
+	<div id="container">
+		
+		<nav id="menu">
+			<ul>
+				<li class="menuitem"><strong>Admin Home</strong></li>
+			</ul>
+	    </nav>
+		 
+		 <aside>
+			<nav id="leftmenu">
+			<h3>Applications</h3>
+				<ul>
+					<li><a href="{% url 'adminbusadd' %}">Add Bus</a></li>
+					<li><a href="{% url 'adminbusdelete' %}">Delete Bus</a></li>
+					<li><a href="{% url 'adminuserdelete' %}">Delete User</a></li>
+					<li><a href="{% url 'adminsql' %}">SQL Query</a></li>
+				</ul>
+			</nav>
+		</aside>
+    
+<section>
+<h2>Bus Reservation System! </h2>
+<h3>Hola Admin,</h3>
+<p>    Bus Reservation System provides bus travellers, the most uncomplicated and hassle-free booking experience ever.
+Choose your destination, select bus based on your preferences, view the available seats, and book your ticket in just a few clicks!
+
+<p><strong>Here you can Add(Delete) a bus and Delete a user! <strong></p>
+ </section> 
+</div><!--container ending-->
+</body>
+</html>
+{% endblock content %}

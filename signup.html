@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign up · Bus Reservation System{% endblock %}
+
+{% block javascript %}
+<script>
+var password = document.getElementById("password")
+  , confirm_password = document.getElementById("confirm_password");
+
+function validatePassword(){
+  if(password.value != confirm_password.value) {
+    confirm_password.setCustomValidity("Passwords Don't Match");
+  } else {
+    confirm_password.setCustomValidity('');
+  }
+}
+
+password.onchange = validatePassword;
+confirm_password.onkeyup = validatePassword;
+</script>
+<script>
+  $('#ssn').on('keyup', function(){
+   var val = this.value.replace(/\D/g, '');
+   var newVal = '';
+    if(val.length > 4) {
+        this.value = val;
+    }
+    if((val.length > 3) && (val.length < 6)) {
+        newVal += val.substr(0, 3) + '-';
+        val = val.substr(3);
+    }
+    if (val.length > 5) {
+        newVal += val.substr(0, 3) + '-';
+        newVal += val.substr(3, 2) + '-';
+        val = val.substr(5);
+    }
+    newVal += val;
+    this.value = newVal;   
+});
+</script>
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Sign up for Bus Reservation System</h3>
+        </div>
+        <div class="panel-body">
+          <form action="{%url 'signup' %}" method="post">
+            {% csrf_token %}
+			<p style="color:red;"><strong>{{errExtra}}
+			{% for c in con %}
+				<p style="color:red;">{{c}} {{': Already Registered!'}}</p>
+			{% endfor %}
+			<hr>
+			</strong></p>
+            <label class="control-label">First Name: *</label>
+            <input maxlength='20' type="text" name ="Fname" class="form-control" value = "{{ fName }}" required>
+            <label class="control-label">Last Name: *</label>
+            <input maxlength='20' type="text" name ="Lname" class="form-control" value = "{{ lName}}"  required>
+			<label class="control-label" style="margin-top:10px; margin-bottom:5px;">Gender: *&nbsp;</label>
+			{% if gen == 'M' %} <input type="radio" id="id_gender" name="gender-user" value ="M" checked="checked" required> Male &nbsp;&nbsp;&nbsp;{% else %}<input type="radio" id="id_gender" name="gender-user" value ="M" required> Male &nbsp;&nbsp;&nbsp; {% endif %} {% if gen == 'F' %}<input type="radio" id="id_gender" value="F" name="gender-user" checked='checked'> Female &nbsp;&nbsp;&nbsp; {% else %} <input type="radio" id="id_gender" value="F" name="gender-user"> Female &nbsp;&nbsp;&nbsp;  {% endif %} {% if gen == 'U' %}<input type="radio" id="id_gender" checked="checked" value="U" name="gender-user"> Undisclosed {% else %}<input type="radio" id="id_gender" value="U" name="gender-user"> Undisclosed{% endif %} <br>
+            <label class="control-label" for="{{ form.confirm_password.id_for_label }}">Social Security Number: *</label>
+            <input pattern='\d{3}[\-]\d{2}[\-]\d{4}' style="margin-bottom:10px;" class="form-control" id="ssn" maxlength="11" name="user_ssn" placeholder="###-##-####"  oninvalid="this.setCustomValidity('Use this format: ###-##-#### (hypens are automated)')"
+				 value = "{{ userSSN }}" oninput="setCustomValidity('')" required>
+            <div class="panel-group{% if form.username.errors %} has-error{% endif %}">
+              <label class="control-label">Username: *</label>
+              <input  value = "{{ userName }}" maxlength='20' type="text" class="form-control"id="{{ form.username.id_for_label }}" name="username" maxlength="{{ form.username.field.max_length }}" required>
+              <span class="help-block">(Usernames may contain <strong>alphanumeric</strong> characters)</span>
+            </div>
+            <div class="panel-group{% if form.email.errors %} has-error{% endif %}">
+              <label class="control-label">Email Address: *</label>
+              <input  value = "{{ userEmail }}" type="email" class="form-control"id="{{ form.email.id_for_label }}" name="email_id" maxlength="30" required>
+            </div>
+            <div class="panel-group{% if form.password.errors %} has-error{% endif %}">
+              <label class="control-label">Password: *</label>
+              <input maxlength='20' type="password" class="form-control"id="password" name="original_password" required>
+            </div>
+            <div class="panel-group{% if form.confirm_password.errors %} has-error{% endif %}">
+              <label class="control-label">Confirm Password: *</label>
+              <input maxlength='20' type="password" class="form-control"id="confirm_password" name="confirm_password" required>
+            </div>
+			
+            <button type="submit" class="btn btn-success">Create an account</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
