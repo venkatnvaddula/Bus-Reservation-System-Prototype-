@@ -11,7 +11,7 @@ Developed a Prototype Bus Reservation System with MySQL as database Python (Djan
   -- Cancel/ Modify tickets
   -- Recover forgotten password
 
-2. Admin/ Station master Module:
+2. Administrator Module:
   -- Manage Registered Customers
   -- Run SQL Query from the front end, instead of going into the MySQL workbench
   -- Add/ Delete Bus in existing route
